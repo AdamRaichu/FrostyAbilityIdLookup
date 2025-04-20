@@ -81,7 +81,7 @@ namespace AbilityIdLookupPlugin
         public override RelayCommand MenuItemClicked => new RelayCommand(o =>
         {
             AbilityIdLookupWindow window = new AbilityIdLookupWindow();
-            if (!window.failed)
+            if (!window.cacheReadFailed)
                 window.Show();
         });
     }

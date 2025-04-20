@@ -22,6 +22,6 @@ using AbilityIdLookupPlugin;
 
 [assembly: PluginDisplayName("Ability Id Lookup Plugin")]
 [assembly: PluginAuthor("AdamRaichu")]
-[assembly: PluginVersion("1.0.0.0")]
+[assembly: PluginVersion("1.1.0.0")]
 [assembly: RegisterMenuExtension(typeof(AbilityIdGenerateCacheMenuExtension))]
 [assembly: RegisterMenuExtension(typeof(ViewAbilityIdLookupWindow))]

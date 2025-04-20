@@ -14,8 +14,9 @@ namespace AbilityIdLookupPlugin.Windows
 {
     public partial class AbilityIdLookupWindow : FrostyDockableWindow
     {
-        private Dictionary<uint, string> idToNameMap = new Dictionary<uint, string>();
-        public bool failed = false;
+        private readonly Dictionary<uint, string> idToNameMap = new Dictionary<uint, string>();
+        public bool cacheReadFailed = false;
+        private bool lookupFailed = true;
 
         public AbilityIdLookupWindow()
         {
@@ -29,11 +30,11 @@ namespace AbilityIdLookupPlugin.Windows
                 else
                 {
                     task.Update("Cache Load Failed", 100);
-                    failed = true;
+                    cacheReadFailed = true;
                 }
             });
             InitializeComponent();
-            if (failed)
+            if (cacheReadFailed)
             {
                 Close();
             }
@@ -41,14 +42,46 @@ namespace AbilityIdLookupPlugin.Windows
 
         private void IdInput_OnKeyUp(object sender, KeyEventArgs e)
         {
+            uint value;
             try
             {
-                AbilityPath.Text = idToNameMap.TryGetValue(Convert.ToUInt32(IdInput.Text, CultureInfo.InvariantCulture), out string name) ? name : "Not Found (Added asset or modified id?)";
+                value = Convert.ToUInt32(IdInput.Text, CultureInfo.InvariantCulture);
             }
-            catch (FormatException)
+            catch (Exception ex) when (ex is FormatException || ex is OverflowException)
             {
-                AbilityPath.Text = "Invalid Id (make sure you only put in numbers)";
+                AbilityPath.Text = ex is FormatException ? "Invalid Id (make sure you only put in numbers)" : "Invalid Id (value too large to be a UInt32)";
+                lookupFailed = true;
+                setOpenAssetButton_IsEnabled(lookupFailed);
+                return;
             }
+
+            bool foundValue = idToNameMap.TryGetValue(value, out string name);
+
+            if (foundValue)
+            {
+                AbilityPath.Text = name;
+                lookupFailed = false;
+            }
+            else
+            {
+                AbilityPath.Text = "Asset not found for id. (Maybe this id is from an added ability?)";
+                lookupFailed = true;
+            }
+            setOpenAssetButton_IsEnabled(lookupFailed);
+        }
+
+        private void setOpenAssetButton_IsEnabled(bool failure)
+        {
+            OpenAssetButton.IsEnabled = !failure;
+        }
+
+        private void OpenAssetButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (lookupFailed) return;
+
+            Close();
+
+            App.EditorWindow.OpenAsset(App.AssetManager.GetEbxEntry(AbilityPath.Text));
         }
 
         private void OkButton_OnClick(object sender, RoutedEventArgs e)

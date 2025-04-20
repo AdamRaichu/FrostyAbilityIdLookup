@@ -25,13 +25,17 @@
         <Grid Background="{StaticResource ListBackground}">
             <StackPanel Orientation="Vertical" Width="550"
                         Margin="20">
-                <Border BorderBrush="{StaticResource ControlBackground}" BorderThickness="2"
-                        Margin="0,2,0,16">
-                    <controls:FrostyWatermarkTextBox WatermarkText="Identifier ID"
+                <Border BorderBrush="{StaticResource ControlBackground}"
+						BorderThickness="2"
+                        Margin="0,2,0,16"
+						Width="200"
+						HorizontalAlignment="Left">
+                    <controls:FrostyWatermarkTextBox WatermarkText="Ability Identifier"
                                                      KeyUp="IdInput_OnKeyUp"
                                                      x:Name="IdInput" 
                                                      Height="24"
-                                                     VerticalContentAlignment="Center" />
+                                                     VerticalContentAlignment="Center" 
+													 Width="200"/>
                 </Border>
 <!--
                 <Border BorderBrush="{StaticResource ControlBackground}" BorderThickness="2"
@@ -48,7 +52,16 @@
 			</StackPanel>
         </Grid>
 
-        <StackPanel Grid.Row="1">
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
+			<Button x:Name="OpenAssetButton"
+                    Margin="8,8,16,8"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Top"
+                    Width="100"
+                    Height="35"
+                    Content="Open Asset"
+                    Click="OpenAssetButton_OnClick"
+					IsEnabled="False"/>
             <Button x:Name="OkButton"
                     Margin="8,8,16,8"
                     HorizontalAlignment="Right"
