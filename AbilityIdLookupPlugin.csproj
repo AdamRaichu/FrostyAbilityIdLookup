@@ -55,5 +55,8 @@
     <Reference Include="System.Xaml" />
     <Reference Include="WindowsBase" />
   </ItemGroup>
+	<ItemGroup>
+		<Resource Include="Images\Hexagon.png" />
+	</ItemGroup>
 
 </Project>

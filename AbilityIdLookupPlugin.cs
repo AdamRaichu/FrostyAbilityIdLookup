@@ -73,7 +73,7 @@ namespace AbilityIdLookupPlugin
 
     public class ViewAbilityIdLookupWindow : MenuExtension
     {
-        //public override ImageSource Icon => new ImageSourceConverter().ConvertFromString("pack://application:,,,/BlueprintEditorPlugin;component/Images/HashingUtilsIcon.png") as ImageSource;
+        public override ImageSource Icon => new ImageSourceConverter().ConvertFromString("pack://application:,,,/AbilityIdLookupPlugin;component/Images/Hexagon.png") as ImageSource;
 
         public override string TopLevelMenuName => "View";
         public override string MenuItemName => "Ability Id Lookup";
