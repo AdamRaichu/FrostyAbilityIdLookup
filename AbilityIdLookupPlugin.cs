@@ -76,6 +76,7 @@ namespace AbilityIdLookupPlugin
         public override ImageSource Icon => new ImageSourceConverter().ConvertFromString("pack://application:,,,/AbilityIdLookupPlugin;component/Images/Hexagon.png") as ImageSource;
 
         public override string TopLevelMenuName => "View";
+        public override string SubLevelMenuName => "Search";
         public override string MenuItemName => "Ability Id Lookup";
 
         public override RelayCommand MenuItemClicked => new RelayCommand(o =>
